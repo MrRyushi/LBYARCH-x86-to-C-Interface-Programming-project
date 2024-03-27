@@ -19,5 +19,8 @@ This repository contains the source code of a C program that calculates the dot 
 Based on the analysis of execution times, it is evident that the C kernel for computing the dot product of two vectors exhibits notably slower performance compared to its x86-64 counterpart. This discrepancy becomes more pronounced with increasing vector sizes. As depicted in the table above, the disparity in execution times between the C kernel and the x86-64 kernel becomes more conspicuous as the vector size grows. For instance, when the vector size is 2^24, the observed difference in runtime between the two kernels is 0.00227 seconds. This variance, though discernible, is relatively minor. However, when the comparison is extended to much larger vector sizes, such as 2^30, the difference becomes substantial, reaching 2.079367 seconds. These findings underscore the efficiency gap between the C kernel and the x86-64 kernel, particularly under heavier computational loads, where the advantage of the x86-64 architecture becomes more evident.
 
 ## Screenshots
-
+###C Output:
 ![Program Output](Screenshots/C-Output.png)
+
+###x86-64 Output:
+![Program Output](Screenshots/x86-64-Output.png)
