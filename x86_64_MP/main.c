@@ -29,34 +29,32 @@ int main() {
     float sdot = 0.0;
     float sdot2 = 0.0;
 
-    for (int i = 0; i < 30; i++) {
-        // Initialize random data
-        for (int i = 0; i < length; i++) {
-            // Generate a random integer between 1 and 1000 (for more precision)
-            int randomInt = rand() % 1000 + 1;
-            // Convert to float and scale to desired range (1 to 10)
-            float randomValue = (float)randomInt / 100.0f;
-            vectorA[i] = randomValue;
-            vectorB[i] = randomValue;
-        }
-
-        // Measure time for Assembly Kernel
-        clock_t start_time = clock();
-        sdot = dotproduct(vectorA, vectorB, length);
-        clock_t end_time = clock();
-        double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-        printf("Time taken by A Kernel: %fs\n", elapsed_time);
-        printf("Assembly Kernel Result = %f \n", sdot);
-
-        // Measure time for C Kernel
-        start_time = clock();
-        sdot2 = dotProductC(vectorA, vectorB, length);
-        end_time = clock();
-        elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
-        printf("Time taken by C Kernel: %f seconds\n", elapsed_time);
-        printf("C Kernel Result = %f \n", sdot2);
-
+    // Initialize random data
+    for (int i = 0; i < length; i++) {
+        // Generate a random integer between 1 and 1000 (for more precision)
+        int randomInt = rand() % 1000 + 1;
+        // Convert to float and scale to desired range (1 to 10)
+        float randomValue = (float)randomInt / 100.0f;
+        vectorA[i] = randomValue;
+        vectorB[i] = randomValue;
     }
+
+    // Measure time for Assembly Kernel
+    clock_t start_time = clock();
+    sdot = dotproduct(vectorA, vectorB, length);
+    clock_t end_time = clock();
+    double elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time taken by A Kernel: %fs\n", elapsed_time);
+    printf("Assembly Kernel Result = %f \n", sdot);
+
+    // Measure time for C Kernel
+    start_time = clock();
+    sdot2 = dotProductC(vectorA, vectorB, length);
+    end_time = clock();
+    elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Time taken by C Kernel: %f seconds\n", elapsed_time);
+    printf("C Kernel Result = %f \n", sdot2);
+
     free(vectorA);
     free(vectorB);
     
