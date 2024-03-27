@@ -1,27 +1,28 @@
-; assembly part using x86-64
 section .data
-length dq 0.0
+    vectorA dq 0
+    vectorB dq 0
+    length dq 0
+    msg db 'Dot product result: %f', 0
 
 section .text
-bits 64
-default rel ; to handle address releocation
-
-global dotproduct
-extern printf
+    global dotproduct
+    extern printf
 
 dotproduct:
-sub rsp, 8*7
-	mov rax, [var6]
-	mov [rsp+48],rax ; 7th parameter
-	mov rax, [var5]
-	mov [rsp+40],rax ; 6th parameter
-	mov rax, [var4]
-	mov [rsp+32],rax ; 5th parameter
-	mov r9, [var3] ; 4th parameter
-	mov r8, [var2] ; 3rd parameter
-	mov rdx, [var1] ; 2nd parameter
-	mov rcx, msg1 ; 1st parameter
-	call printf
-add rsp, 8*7
+    ; Input: rcx = address of vectorA, rdx = address of vectorB, r8 = length
+    ; Output: xmm0 = dot product result
 
-ret
+    xorps xmm0, xmm0          ; Initialize xmm0 to 0 (for accumulating the result)
+    mov r9, r8                ; Store the original length in r9          
+
+dot_loop:
+    movss xmm1, [rcx]         ; Load float from vectorA
+    movss xmm2, [rdx]         ; Load float from vectorB
+    mulss xmm1, xmm2          ; Multiply vectorA[i] by vectorB[i]
+    addss xmm0, xmm1          ; Accumulate the result
+    add rcx, 4
+    add rdx, 4
+    dec r9                    ; Decrement the loop counter
+    jnz dot_loop              ; Repeat until all elements are processed
+
+    ret
